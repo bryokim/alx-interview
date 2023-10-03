@@ -22,8 +22,7 @@ def canUnlockAll(boxes):
             valid_keys = {
                 key
                 for key in boxes[stack.pop()]
-                if key not in unlocked
-                and key < len(boxes)  # Prevent IndexError
+                if key not in unlocked and key < len(boxes)
             }
 
             # Update stack and unlocked.
