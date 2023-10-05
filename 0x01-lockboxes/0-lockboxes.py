@@ -16,20 +16,24 @@ def canUnlockAll(boxes):
 
     unlocked = {0}  # The first box is unlocked
     stack = {0}  # Keep track of which box to open next
+    size = len(boxes)
 
-    for _ in range(len(boxes) - 1):
+    if size == 1:
+        return True
+
+    for _ in range(size - 1):
         if len(stack) > 0:
             valid_keys = {
                 key
                 for key in boxes[stack.pop()]
-                if key not in unlocked and key < len(boxes)
+                if key not in unlocked and key < size
             }
 
             # Update stack and unlocked.
             stack.update(valid_keys)
             unlocked.update(valid_keys)
 
-            if len(unlocked) == len(boxes):  # All boxes are unlocked.
+            if len(unlocked) == size:  # All boxes are unlocked.
                 return True
         else:
             return False
