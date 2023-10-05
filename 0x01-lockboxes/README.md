@@ -34,7 +34,15 @@ print(canUnlockAll(boxes))  # True
 
 boxes = [[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
 print(canUnlockAll(boxes))  # False
+
+
+# If a single box is given, then the function returns true.
+boxes = [[]]
+print(canUnlockAll(boxes))  # True
+
+boxes = [[1]]
+print(canUnlockAll(boxes))  # True
 ```
 
----
-Happy coding
+\
+**_Happy coding 💻_**
