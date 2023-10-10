@@ -28,7 +28,6 @@ def minOperations(n: Any) -> int:
         n == 0 or
         math.isinf(n)
     ):
-        print(n)
         return 0
 
     if type(n) is float:
