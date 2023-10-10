@@ -34,7 +34,7 @@ def minOperations(n: int) -> int:
         return 0
 
     mid = math.floor(n / 2)
-    min_operations: int = n
+    min_operations = n
 
     # Loop until the midpoint.
     for i in range(1, mid + 1):
