@@ -2,9 +2,10 @@
 """minOperations module"""
 
 import math
+from typing import Any
 
 
-def minOperations(n: int) -> int:
+def minOperations(n: Any) -> int:
     """Calculates the fewest number of operations needed to result
     in exactly `n H` characters in a file. The file starts with a single `H`
     character.
@@ -17,13 +18,21 @@ def minOperations(n: int) -> int:
         `n`.
 
     Args:
-        n (int): Number of `H` characters expected.
+        n (Any): Number of `H` characters expected.
 
     Returns:
         int: Minimum number of operations to execute.
     """
-    if type(n) is not int or type(n) is not float or n == 0 or math.isinf(n):
+    if (
+        (type(n) is not int and type(n) is not float) or
+        n == 0 or
+        math.isinf(n)
+    ):
+        print(n)
         return 0
+
+    if type(n) is float:
+        n = math.floor(n)
 
     mid = math.floor(n / 2)
     min_operations = n
@@ -40,4 +49,4 @@ def minOperations(n: int) -> int:
 
 
 if __name__ == "__main__":
-    print(minOperations(5))
+    print(minOperations(5.5))
