@@ -25,7 +25,7 @@ def minOperations(n: Any) -> int:
     """
     if (
         (type(n) is not int and type(n) is not float) or
-        n == 0 or
+        n <= 1 or
         math.isinf(n)
     ):
         return 0
@@ -48,4 +48,4 @@ def minOperations(n: Any) -> int:
 
 
 if __name__ == "__main__":
-    print(minOperations(5.5))
+    print(minOperations(-1))
