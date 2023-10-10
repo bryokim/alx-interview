@@ -22,15 +22,7 @@ def minOperations(n: int) -> int:
     Returns:
         int: Minimum number of operations to execute.
     """
-    if type(n) is not int or n == 0:
-        if type(n) is float:
-            f, _ = math.modf(n)  # Get the fractional part.
-            if f != 0:  # If fractional part is not 0
-                return 0
-        else:
-            return 0
-
-    if math.isinf(n):
+    if type(n) is not int or type(n) is not float or n == 0 or math.isinf(n):
         return 0
 
     mid = math.floor(n / 2)
