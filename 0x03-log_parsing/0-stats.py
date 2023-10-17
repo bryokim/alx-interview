@@ -27,24 +27,23 @@ def main():
             match_obj = log_regex.match(line)
 
             if not match_obj:
+                line_count += 1
                 continue
 
             status_code = int(match_obj.group(4))
 
-            if status_code not in accepted_status_codes:
-                continue
-
             file_size = int(match_obj.group(5))
 
-            status_codes.setdefault(status_code, 0)
-            status_codes[status_code] += 1
+            if status_code in accepted_status_codes:
+                status_codes.setdefault(status_code, 0)
+                status_codes[status_code] += 1
 
             total_file_size += file_size
 
             line_count += 1
 
             if line_count == 10:
-                print("File size: {}".format(total_file_size))
+                print("File size: {}".format(total_file_size), flush=True)
                 print_status_codes(status_codes)
                 line_count = 0
     except KeyboardInterrupt:
@@ -59,7 +58,7 @@ def print_status_codes(status_codes: dict):
         status_codes (dict): Dictionary of the status codes to print.
     """
     for code in sorted(status_codes.keys()):
-        print("{}: {}".format(code, status_codes[code]))
+        print("{}: {}".format(code, status_codes[code]), flush=True)
 
 
 if __name__ == "__main__":
