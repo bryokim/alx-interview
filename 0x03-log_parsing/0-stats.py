@@ -6,8 +6,8 @@ import sys
 
 # Regex for matching logs.
 log_regex = re.compile(
-    r"(\d{1,3}\.*){4}\s-\s\[\d{4}(-\d{1,2}){2}\s(\d{1,2}:*){3}.\d{6}\]\s"
-    + r'"GET /projects/260 HTTP/1.1"\s(\d{3})\s(\d{1,4})'
+    r"(\d{1,3}\.*){4}\s-\s\[\d{4}(-\d{1,2}){2}\s(\d{1,2}:*){3}.\d{6}\]\s" +
+    r'"GET /projects/260 HTTP/1.1"\s(\d{3})\s(\d{1,4})'
 )
 
 
