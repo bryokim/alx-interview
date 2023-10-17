@@ -6,8 +6,8 @@ import sys
 
 # Regex for matching logs.
 log_regex = re.compile(
-    r"(\d{1,3}\.*){4}\s-\s\[\d{4}(-\d{1,2}){2}\s(\d{1,2}:*){3}.\d{6}\]\s" +
-    r'"GET /projects/260 HTTP/1.1"\s(\d{3})\s(\d{1,4})'
+    r"(\d{1,3}\.*){4}\s-\s\[\d{4}(-\d{1,2}){2}\s(\d{1,2}:*){3}.\d{6}\]\s"
+    + r'"GET /projects/260 HTTP/1.1"\s(\d{3})\s(\d{1,4})'
 )
 
 
@@ -19,8 +19,16 @@ def main():
     """
 
     line_count, total_file_size = 0, 0
-    status_codes = {}
-    accepted_status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
+    status_codes = {
+        "200": 0,
+        "301": 0,
+        "400": 0,
+        "401": 0,
+        "403": 0,
+        "404": 0,
+        "405": 0,
+        "500": 0,
+    }
 
     try:
         for line in sys.stdin:
@@ -30,15 +38,15 @@ def main():
                 line_count += 1
                 continue
 
-            status_code = int(match_obj.group(4))
+            try:
+                status_code = match_obj.group(4)
+                if status_code in status_codes:
+                    status_codes[status_code] += 1
 
-            file_size = int(match_obj.group(5))
-
-            if status_code in accepted_status_codes:
-                status_codes.setdefault(status_code, 0)
-                status_codes[status_code] += 1
-
-            total_file_size += file_size
+                file_size = int(match_obj.group(5))
+                total_file_size += file_size
+            except ValueError:
+                pass
 
             line_count += 1
 
@@ -58,7 +66,8 @@ def print_status_codes(status_codes: dict):
         status_codes (dict): Dictionary of the status codes to print.
     """
     for code in sorted(status_codes.keys()):
-        print("{}: {}".format(code, status_codes[code]), flush=True)
+        if status_codes[code]:
+            print("{}: {}".format(code, status_codes[code]), flush=True)
 
 
 if __name__ == "__main__":
