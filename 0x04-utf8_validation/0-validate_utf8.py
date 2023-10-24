@@ -33,6 +33,10 @@ def validUTF8(data):
 
             num_bytes -= 1
 
+    if num_bytes > 0:
+        # Last character was not encoded correctly.
+        return False
+
     return True
 
 
