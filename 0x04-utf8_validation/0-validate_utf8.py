@@ -15,20 +15,19 @@ def validUTF8(data):
     num_bytes = 0
 
     for num in data:
-        ls_8_bits = num & 0b11111111  # check 8 least significant bits.
+        if (num >> 8) != 0:
+            return False
 
         if num_bytes == 0:
-            num_bytes = check_num_bytes_in_character(ls_8_bits)
+            num_bytes = check_num_bytes_in_character(num)
 
-            if num_bytes == 1 and ls_8_bits >> 7 != 0:
+            if num_bytes == 1 and num >> 7 != 0:
                 return False
 
             num_bytes -= 1
         else:
             # Ensure the leading bytes are 10
-            if (ls_8_bits & 0b10000000) or (
-                ls_8_bits | 0b10111111
-            ) != 0b10111111:
+            if (num & 0b10000000) or (num | 0b10111111) != 0b10111111:
                 return False
 
             num_bytes -= 1
