@@ -26,7 +26,7 @@ def validUTF8(data):
 
         else:
             # Ensure the leading bytes are 10
-            if (num & 0b10000000) or (num | 0b10111111) != 0b10111111:
+            if (num & 0b10000000) == 0 or (num | 0b10111111) != 0b10111111:
                 return False
 
         num_bytes -= 1
