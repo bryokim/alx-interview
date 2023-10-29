@@ -15,8 +15,7 @@ def validUTF8(data):
     num_bytes = 0
 
     for num in data:
-        if (num >> 8) != 0:
-            return False
+        num = num & 0b11111111  # Discard bits above 8
 
         if num_bytes == 0:
             num_bytes = check_num_bytes_in_character(num)
@@ -27,6 +26,7 @@ def validUTF8(data):
         else:
             # Ensure the leading bytes are 10
             if (num & 0b10000000) == 0 or (num | 0b10111111) != 0b10111111:
+                print("false")
                 return False
 
         num_bytes -= 1
@@ -49,13 +49,17 @@ def check_num_bytes_in_character(first_byte):
         int: Number of bytes in the character encoding.
     """
 
-    x = first_byte & 0b11110000  # first_byte | 240
-
-    if x == 0b11000000 and (first_byte | 0b11011111) == 0b11011111:
+    if (first_byte & 0b11000000) == 0b11000000 and (
+        (first_byte | 0b11011111)
+    ) == 0b11011111:
         return 2
-    elif x == 0b11100000 and (first_byte | 0b11101111) == 0b11101111:
+    elif (first_byte & 0b11100000) == 0b11100000 and (
+        first_byte | 0b11101111
+    ) == 0b11101111:
         return 3
-    elif x == 0b11110000 and (first_byte | 0b11110111) == 0b11110111:
+    elif (first_byte & 0b11110000) == 0b11110000 and (
+        first_byte | 0b11110111
+    ) == 0b11110111:
         return 4
     else:
         return 1
