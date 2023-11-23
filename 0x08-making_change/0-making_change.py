@@ -77,7 +77,7 @@ def makeChange(coins, total):
     num_of_coins = 0
     index = 0
 
-    while current > 0:
+    while current > 0 and index < len(coins):
         quotient, remainder = divmod(current, coins[index])
 
         gcd = gcd_list(*coins[index + 1:])
@@ -107,9 +107,6 @@ def makeChange(coins, total):
         current = remainder
 
         index += 1
-
-        if index == len(coins):
-            break
 
     if current != 0:
         return -1
