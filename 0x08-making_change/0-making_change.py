@@ -80,7 +80,7 @@ def makeChange(coins, total):
     while current > 0:
         quotient, remainder = divmod(current, coins[index])
 
-        gcd = gcd_list(*coins[index + 1 :])
+        gcd = gcd_list(*coins[index + 1:])
 
         if gcd > 0:
             # Reduce quotient until remainder is divisible by other
