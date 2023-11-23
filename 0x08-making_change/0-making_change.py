@@ -4,6 +4,54 @@
 import math
 
 
+def gcd(a, b):
+    """Find gcd of 2 integers.
+
+    Args:
+        a (int): first integer
+        b (int): second integer
+
+    Returns:
+        int: gcd
+    """
+    if a == 0:
+        return b
+    if b == 0:
+        return a
+
+    # base case
+    if a == b:
+        return a
+
+    # a is greater
+    if a > b:
+        return gcd(a - b, b)
+    return gcd(a, b - a)
+
+
+def gcd_list(*integers):
+    """Find gcd of a list of integers
+
+    Returns:
+        int: gcd
+    """
+    if len(integers) == 0:
+        return 0
+
+    if len(integers) == 1:
+        return integers[0]
+
+    num1 = integers[0]
+    num2 = integers[1]
+
+    x = gcd(num1, num2)
+
+    for i in range(2, len(integers)):
+        x = gcd(x, integers[i])
+
+    return x
+
+
 def makeChange(coins, total):
     """Determines the fewest number of coins needed to meet
     a given amount total
@@ -32,7 +80,7 @@ def makeChange(coins, total):
     while current > 0:
         x, y = divmod(current, coins[index])
 
-        gcd = math.gcd(*coins[index + 1:])
+        gcd = gcd_list(*coins[index + 1:])
 
         if gcd > 0:
             # Reduce quotient until remainder is divisible by other
@@ -44,14 +92,14 @@ def makeChange(coins, total):
                 x -= 1
                 y = current - coins[index] * x
 
-        # try:
-        #     x_1, y_1 = divmod(current, coins[index + 1])
+        try:
+            x_1, y_1 = divmod(current, coins[index + 1])
 
-        #     if y_1 == 0 and x_1 == x + 1:
-        #         x = x_1
-        #         y = y_1
-        # except IndexError:
-        #     pass
+            if y_1 == 0 and x_1 == x + 1:
+                x = x_1
+                y = y_1
+        except IndexError:
+            pass
 
         num_of_coins += x
         current = y
