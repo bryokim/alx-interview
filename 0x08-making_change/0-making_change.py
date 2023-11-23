@@ -78,9 +78,9 @@ def makeChange(coins, total):
     index = 0
 
     while current > 0:
-        x, y = divmod(current, coins[index])
+        quotient, remainder = divmod(current, coins[index])
 
-        gcd = gcd_list(*coins[index + 1:])
+        gcd = gcd_list(*coins[index + 1 :])
 
         if gcd > 0:
             # Reduce quotient until remainder is divisible by other
@@ -88,21 +88,23 @@ def makeChange(coins, total):
             # adding to the total amount leaving a remainder that isn't
             # divisible with other lower value coins leading to incorrect
             # coin count.
-            while math.fmod(y, gcd) > 0 and x > 0:
-                x -= 1
-                y = current - coins[index] * x
+            while math.fmod(remainder, gcd) > 0 and quotient > 0:
+                quotient -= 1
+                remainder = current - coins[index] * quotient
 
         try:
+            # Check if the next coin value can fully divide the amount
+            # with a lesser count.
             x_1, y_1 = divmod(current, coins[index + 1])
 
-            if y_1 == 0 and x_1 == x + 1:
-                x = x_1
-                y = y_1
+            if y_1 == 0 and x_1 == quotient + 1:
+                quotient = x_1
+                remainder = y_1
         except IndexError:
             pass
 
-        num_of_coins += x
-        current = y
+        num_of_coins += quotient
+        current = remainder
 
         index += 1
 
