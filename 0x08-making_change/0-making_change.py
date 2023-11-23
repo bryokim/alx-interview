@@ -44,14 +44,14 @@ def makeChange(coins, total):
                 x -= 1
                 y = current - coins[index] * x
 
-        try:
-            x_1, y_1 = divmod(current, coins[index + 1])
+        # try:
+        #     x_1, y_1 = divmod(current, coins[index + 1])
 
-            if y_1 == 0 and x_1 == x + 1:
-                x = x_1
-                y = y_1
-        except IndexError:
-            pass
+        #     if y_1 == 0 and x_1 == x + 1:
+        #         x = x_1
+        #         y = y_1
+        # except IndexError:
+        #     pass
 
         num_of_coins += x
         current = y
