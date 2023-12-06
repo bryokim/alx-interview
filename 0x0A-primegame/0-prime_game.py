@@ -30,7 +30,9 @@ def isWinner(x, nums):
 
         numbers = [j for j in range(1, nums[i] + 1)]
 
-        if len(numbers) == 1:
+        if len(numbers) == 0:
+            pass
+        elif len(numbers) == 1:
             # A list of 1 only.
             # 1 is not a prime number.
             BEN += 1
